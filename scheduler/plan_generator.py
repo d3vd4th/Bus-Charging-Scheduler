@@ -1,16 +1,5 @@
-"""
-Plan generator — enumerates all valid charging plans for a given route,
-battery config, and travel direction.
-
-A "charging plan" is an ordered list of station IDs that a bus will stop
-at for charging.  A plan is valid iff every gap between consecutive
-charge-points (including origin → first station and last station →
-destination) is ≤ battery range.
-"""
 from __future__ import annotations
-
 from itertools import combinations
-
 from .models import BatteryConfig, Bus, Route
 
 
@@ -19,12 +8,7 @@ def generate_valid_plans(
     battery: BatteryConfig,
     direction: str,
 ) -> list[list[str]]:
-    """
-    Return every valid charging plan for a bus traveling in *direction*.
 
-    Each plan is a list of station IDs in travel order.
-    Plans are sorted by number of stops (fewest first), then alphabetically.
-    """
     station_order = route.get_station_order(direction)
     station_ids = [s.id for s in station_order]
 
@@ -34,7 +18,6 @@ def generate_valid_plans(
 
     valid_plans: list[list[str]] = []
 
-    # Try every possible subset size (0 stops through all stations)
     for size in range(len(station_ids) + 1):
         for combo in combinations(station_ids, size):
             plan = list(combo)

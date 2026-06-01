@@ -1,22 +1,8 @@
-"""
-Data models for the Bus Charging Scheduler.
 
-Input models  — loaded from scenario JSON files.
-Output models — produced by the scheduling engine.
-
-All models are plain dataclasses with no external dependencies, making them
-easy to serialize, test, and extend.
-"""
 from __future__ import annotations
-
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 from typing import Optional
-
-
-# ════════════════════════════════════════════════════════════════
-#  INPUT MODELS — describe the world the scheduler operates in
-# ════════════════════════════════════════════════════════════════
 
 @dataclass(frozen=True)
 class Segment:
@@ -121,15 +107,6 @@ class BatteryConfig:
 
 @dataclass
 class Weights:
-    """
-    Tunable soft-objective weights.
-
-    Each weight multiplies the corresponding scoring rule's output when
-    resolving charger conflicts.  Higher weight → more influence.
-
-    To add a new weight, add a field here *and* create a matching
-    ScoringRule whose `weight_key` property returns the field name.
-    """
     individual_wait: float = 1.0
     operator_fairness: float = 1.0
     overall_throughput: float = 1.0
@@ -141,11 +118,6 @@ class Weights:
 
 @dataclass
 class Scenario:
-    """
-    Complete scenario specification — everything the scheduler needs.
-
-    One JSON file ↔ one Scenario object.
-    """
     name: str
     description: str
     route: Route
