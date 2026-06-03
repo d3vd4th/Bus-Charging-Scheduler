@@ -1,4 +1,4 @@
-# 🚌 Bus Charging Scheduler
+# Bus Charging Scheduler
 
 A Streamlit web app that schedules electric bus charging stops along the Bengaluru ↔ Kochi route, handling charger contention at 4 shared stations with tunable optimisation weights.
 
