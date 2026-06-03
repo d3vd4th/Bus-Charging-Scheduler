@@ -1,7 +1,5 @@
 # Bus Charging Scheduler
-
-A Streamlit web app that schedules electric bus charging stops along the Bengaluru ↔ Kochi route, handling charger contention at 4 shared stations with tunable optimisation weights.
-
+A data-driven Streamlit web app that schedules electric bus charging stops along any given route, handling charger contention at shared stations with tunable optimisation weights.
 ## Quick Start
 
 ```bash
@@ -169,11 +167,3 @@ The app automatically discovers new JSON files — no code changes needed.
     └── station_view.py
 ```
 
-## Assumptions
-
-1. **Constant speed**: All buses travel at 60 km/h with no traffic variation
-2. **Charging always to full**: Every charge fills the battery to 240 km range
-3. **No partial charges**: A bus either charges (25 min, full) or skips a station
-4. **Simultaneous queuing**: When multiple buses arrive at the same instant, arrival order is deterministic (based on event sequence)
-5. **No overnight wrap**: Departure times don't cross midnight (all within a single day)
-6. **Endpoints have their own chargers**: Bengaluru and Kochi charge buses before departure — they're not part of the scheduling problem
