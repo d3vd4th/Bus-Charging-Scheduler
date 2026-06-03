@@ -136,34 +136,4 @@ Create a new JSON file in `data/scenarios/` following this structure:
 
 The app automatically discovers new JSON files — no code changes needed.
 
-## Project Structure
-
-```
-├── app.py                          # Streamlit entry point
-├── requirements.txt
-├── data/scenarios/                 # Scenario JSON files (data, not code)
-│   ├── scenario_1.json             # Even spacing
-│   ├── scenario_2.json             # Bunched start
-│   ├── scenario_3.json             # Asymmetric load
-│   ├── scenario_4.json             # Operator-heavy
-│   └── scenario_5.json             # Worst case convergence
-├── scheduler/
-│   ├── models.py                   # All dataclasses (input + output)
-│   ├── loader.py                   # JSON → Scenario
-│   ├── plan_generator.py           # Enumerates valid charging plans
-│   ├── simulation.py               # Discrete event simulation engine
-│   ├── optimizer.py                # Iterative plan refinement
-│   ├── engine.py                   # Top-level orchestrator
-│   └── rules/                      # Pluggable scoring rules
-│       ├── base.py                 # ScoringRule ABC + RuleRegistry
-│       ├── individual_wait.py      # Prevent individual bus starvation
-│       ├── operator_fairness.py    # Balance wait across operators
-│       └── throughput.py           # Minimise cascade delays
-└── ui/                             # Streamlit UI components
-    ├── scenario_selector.py
-    ├── weight_controls.py
-    ├── input_view.py
-    ├── bus_timetable.py
-    └── station_view.py
-```
 
