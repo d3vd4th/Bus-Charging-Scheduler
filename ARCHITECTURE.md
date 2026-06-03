@@ -96,10 +96,12 @@ Each row describes a change the real world is likely to require, and how this de
 | 13 | **Partial charging** (not always to full) | Add charge level to ChargingEvent | Modify simulation to track SOC instead of binary full/empty |
 | 14 | **Variable speed / traffic** | Add speed profile to segments or time-of-day table | Modify travel time calculation |
 | 15 | **Different charger types** (fast/slow) | Add `"charger_type"` to station + different charge times | Minor simulation change to select charger type |
+| 16 | **Live GPS tracking** | Real-time stream of bus locations / delays | Convert engine to a long-running service that re-triggers DES dynamically |
+| 17 | **Production-grade stack** | Move JSON source of truth to a database (e.g., PostgreSQL) | Replace Streamlit with a dedicated REST API backend + decoupled frontend |
 
 Changes 1–8 require **zero code changes** — they're pure data edits.
 Changes 9–12 require a **single new rule file** and a weight field.
-Changes 13–15 require simulation logic changes but are localised to one module.
+Changes 13–17 require simulation or architectural logic changes but are localised to specific modules.
 
 ---
 
