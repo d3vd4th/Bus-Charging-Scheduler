@@ -1,57 +1,33 @@
-"""Weight controls — interactive sliders for tuning optimisation weights."""
-from __future__ import annotations
-
 import streamlit as st
-
+import dataclasses
 from scheduler.models import Weights
 
-
 def render_weight_controls(defaults: Weights) -> Weights:
-    """
-    Render three weight sliders and return the user-selected Weights.
-
-    Defaults come from the scenario file, but users can override them.
-    """
     st.markdown("#### ⚖️ Optimisation Weights")
     st.caption("Adjust how the scheduler prioritises when resolving charger conflicts.")
 
-    col1, col2, col3 = st.columns(3)
+    weight_fields = dataclasses.fields(Weights)
+    
+    user_selections = {}
 
-    with col1:
-        w_individual = st.slider(
-            "Individual Wait",
-            min_value=0.0,
-            max_value=5.0,
-            value=defaults.individual_wait,
-            step=0.1,
-            help="Higher → no single bus should wait too long",
-            key="weight_individual",
-        )
+    NUM_COLUMNS = 2
+    cols = st.columns(NUM_COLUMNS)
 
-    with col2:
-        w_operator = st.slider(
-            "Operator Fairness",
-            min_value=0.0,
-            max_value=5.0,
-            value=defaults.operator_fairness,
-            step=0.1,
-            help="Higher → balance wait times across operators",
-            key="weight_operator",
-        )
+    for index, field in enumerate(weight_fields):
+        current_col = cols[index % NUM_COLUMNS]
+        
+        with current_col:
+            display_name = field.name.replace("_", " ").title()
+            default_val = getattr(defaults, field.name)
+            chosen_val = st.slider(
+                label=display_name,
+                min_value=0.0,
+                max_value=5.0,
+                value=float(default_val),
+                step=0.1,
+                key=f"weight_{field.name}"
+            )
+            
+            user_selections[field.name] = chosen_val
 
-    with col3:
-        w_overall = st.slider(
-            "Overall Throughput",
-            min_value=0.0,
-            max_value=5.0,
-            value=defaults.overall_throughput,
-            step=0.1,
-            help="Higher → minimise total network delay",
-            key="weight_overall",
-        )
-
-    return Weights(
-        individual_wait=w_individual,
-        operator_fairness=w_operator,
-        overall_throughput=w_overall,
-    )
+    return Weights(**user_selections)
