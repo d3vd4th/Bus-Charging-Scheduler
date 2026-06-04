@@ -1,22 +1,9 @@
-"""
-Bus Charging Scheduler — Streamlit Application
-
-A scheduling tool for electric bus charging across shared stations
-on the Bengaluru ↔ Kochi route.
-
-Usage:
-    streamlit run app.py
-"""
 from __future__ import annotations
-
 from pathlib import Path
-
 import streamlit as st
-
 from scheduler.engine import schedule
 from scheduler.loader import load_scenario
 from scheduler.models import Weights
-
 from ui.scenario_selector import render_scenario_selector
 from ui.weight_controls import render_weight_controls
 from ui.input_view import render_input_view
